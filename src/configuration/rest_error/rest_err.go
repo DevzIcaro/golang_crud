@@ -2,6 +2,8 @@ package rest_err
 
 import "net/http"
 
+// RestErr é a estrutura de mensagem de erro, pode se observar que ela é criada mas é puxada para todas as outras funções
+// facilitando as funcões, minimizando códigos e melhorando desempenho com reutilização de código.
 type RestErr struct {
 	Message string   `json:"message"`
 	Err     string   `json:"err"`

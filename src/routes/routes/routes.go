@@ -1,7 +1,7 @@
 package routes
 
 import (
-	controller "github.com/DevzIcaro/golang_crud/src/controller/routes"
+	controller "github.com/DevzIcaro/golang_crud/src/controller"
 	"github.com/gin-gonic/gin"
 )
 
