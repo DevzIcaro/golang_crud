@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	rest_err "github.com/DevzIcaro/golang_crud/src/configuration/rest_error"
+	"github.com/DevzIcaro/golang_crud/src/configuration/validation"
 	"github.com/DevzIcaro/golang_crud/src/controller/model/request"
 	"github.com/gin-gonic/gin"
 )
@@ -19,9 +19,7 @@ func CreateUser(c *gin.Context) {
 
 		log.Println("Iniciação createuser controller, error=", err.Error())
 
-		restERR := rest_err.NewBadRequestError(
-			fmt.Sprintf("Algum campo está incorreto"))
-
+		restERR := validation.ValidateUserError(err)
 		c.JSON(restERR.Code, restERR)
 		return
 	}
