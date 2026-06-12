@@ -2,29 +2,36 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/DevzIcaro/golang_crud/src/configuration/logger"
 	"github.com/DevzIcaro/golang_crud/src/configuration/validation"
 	"github.com/DevzIcaro/golang_crud/src/controller/model/request"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func CreateUser(c *gin.Context) {
-	log.Println("Iniciação createuser controller")
+	logger.Info("Iniciação createuser controller",
+		zap.String("Journey", "CreateString"),
+	)
 
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 
-		log.Println("Iniciação createuser controller, error=", err.Error())
+		logger.Error("Erro ao validar UserRequest", err,
+			zap.String("Journey", "CreateString"),
+		)
 
 		restERR := validation.ValidateUserError(err)
 		c.JSON(restERR.Code, restERR)
 		return
 	}
 
-	log.Println("UserRequest é valido", userRequest)
+	logger.Info("UserRequest é valido",
+		zap.String("Journey", "CreateString"),
+	)
 
 	userResponsePostman := request.UserRequest{
 		Email:    userRequest.Email,

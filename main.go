@@ -3,12 +3,14 @@ package main
 import (
 	"log"
 
+	"github.com/DevzIcaro/golang_crud/src/configuration/logger"
 	"github.com/DevzIcaro/golang_crud/src/controller/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	logger.Info("Iniciando a aplicação")
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
