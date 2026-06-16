@@ -7,14 +7,12 @@ import (
 	"github.com/DevzIcaro/golang_crud/src/configuration/logger"
 	"github.com/DevzIcaro/golang_crud/src/configuration/validation"
 	"github.com/DevzIcaro/golang_crud/src/controller/model/request"
+	"github.com/DevzIcaro/golang_crud/src/model"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 func CreateUser(c *gin.Context) {
-	logger.Info("Iniciação createuser controller",
-		zap.String("Journey", "CreateString"),
-	)
 
 	var userRequest request.UserRequest
 
@@ -33,14 +31,19 @@ func CreateUser(c *gin.Context) {
 		zap.String("Journey", "CreateString"),
 	)
 
-	userResponsePostman := request.UserRequest{
-		Email:    userRequest.Email,
-		Password: userRequest.Password,
-		Name:     userRequest.Name,
-		Age:      userRequest.Age,
+	domain := model.NewUserDomain(
+		userRequest.Email,
+		userRequest.Password,
+		userRequest.Name,
+		userRequest.Age,
+	)
+
+	if err := domain.CreateUser(); err != nil {
+		c.JSON(err.Code, err)
+		return
 	}
 
-	c.JSON(http.StatusCreated, userResponsePostman)
+	c.String(http.StatusCreated, "")
 
 	fmt.Println(userRequest)
 }
